@@ -1,0 +1,140 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<fmt:setLocale value="${sessionScope.locale}" />
+	<fmt:setBundle basename="messages" var="i18n" />
+
+
+	<nav class="navbar navbar-expand-md navbar-light bg-light">
+		<a class="navbar-brand"
+			href="${pageContext.request.contextPath}/frontController?command=main">
+			<fmt:message key="menu.name" bundle="${i18n}"></fmt:message>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarCollapse" aria-controls="navbarCollapse">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				<c:choose>
+					<c:when test="${pageName eq 'catalog'}">
+						<li class="nav-item active"><a class="nav-link"
+							href="${pageContext.request.contextPath}/frontController?command=catalog&amp;page=1">
+								<fmt:message key="menu.catalog" bundle="${i18n}"></fmt:message>
+						</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath}/frontController?command=catalog&amp;page=1">
+								<fmt:message key="menu.catalog" bundle="${i18n}"></fmt:message>
+						</a></li>
+					</c:otherwise>
+				</c:choose>
+
+
+				<c:choose>
+					<c:when test="${pageName eq 'about'}">
+						<li class="nav-item active"><a class="nav-link"
+							href="${pageContext.request.contextPath}/frontController?command=about"><fmt:message
+									key="about.title" bundle="${i18n}"></fmt:message></a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath}/frontController?command=about"><fmt:message
+									key="about.title" bundle="${i18n}"></fmt:message></a></li>
+					</c:otherwise>
+				</c:choose>
+
+
+				<c:url var="path"
+					value="/frontController?command=${sessionScope.pageName}"></c:url>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"> <fmt:message
+							key="menu.language" bundle="${i18n}"></fmt:message>
+				</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="${path}&amp;locale=ru">Русский</a>
+						<a class="dropdown-item" href="${path}&amp;locale=en">English</a>
+					</div></li>
+
+				<c:choose>
+					<c:when test="${not empty suser}">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#"
+							id="navbarDropdownMenuLink" data-toggle="dropdown"> <fmt:message
+									key="menu.hello" bundle="${i18n}"></fmt:message>,
+								${suser.name}!
+						</a>
+							<div class="dropdown-menu"
+								aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=edituser">
+									<fmt:message key="menu.edit" bundle="${i18n}"></fmt:message>
+								</a> <a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=myfilms">
+									<fmt:message key="myfilms.title" bundle="${i18n}"></fmt:message>
+								</a> <a class="divider"></a> <a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=logout">
+									<fmt:message key="menu.logout" bundle="${i18n}"></fmt:message>
+								</a>
+							</div></li>
+					</c:when>
+					<c:when test="${not empty sadmin}">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#"
+							id="navbarDropdownMenuLink" data-toggle="dropdown"> <fmt:message
+									key="menu.hello" bundle="${i18n}"></fmt:message>,
+								${sadmin.name}!
+						</a>
+							<div class="dropdown-menu"
+								aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=addfilm">
+									<fmt:message key="admin.add.film" bundle="${i18n}"></fmt:message>
+								</a> <a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=users">
+									<fmt:message key="users.title" bundle="${i18n}"></fmt:message>
+								</a> <a class="dropdown-item"
+									href="${pageContext.request.contextPath}/frontController?command=logout">
+									<fmt:message key="menu.logout" bundle="${i18n}"></fmt:message>
+								</a>
+							</div></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item navbar-right"><a class="nav-link"
+							href="${pageContext.request.contextPath}/frontController?command=login">
+								<fmt:message key="menu.signin" bundle="${i18n}"></fmt:message>
+						</a></li>
+					</c:otherwise>
+				</c:choose>
+
+
+				<c:choose>
+					<c:when test="${not empty suser}">
+						<fmt:message bundle="${i18n}" key="user.userBalance" />
+							${suser.balance}
+							<form class="form-inline mt-2 mt-md-0"
+							action="frontController?command=addBalance" method="post">
+							<button class="btn btn-outline-secondary my-2 my-sm-0"
+								type="submit">
+								<fmt:message bundle="${i18n}" key="user.addBalance" />
+							</button>
+
+						</form>
+					</c:when>
+				</c:choose>
+			</ul>
+
+			<form class="form-inline mt-2 mt-md-0"
+				action="frontController?command=searchcatalog" method="post">
+				<input class="form-control mr-sm-2" type="text" required=""
+					pattern=".{3,30}" name="name" />
+				<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+					<fmt:message key="searchcatalog.title" bundle="${i18n}"></fmt:message>
+				</button>
+			</form>
+		</div>
+	</nav>
+
+</jsp:root>

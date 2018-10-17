@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:u="urn:jsptagdir:/WEB-INF/tags/utils"
+      xmlns:com="urn:jsptagdir:/WEB-INF/tags/common"
+      xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+
+<jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="messages" var="i18n"/>
+<style>
+    footer {
+        background-color: #eef1ff;
+        padding: 25px;
+    }
+</style>
+<script>
+    var contextUrl = '${pageContext.request.contextPath}';
+</script>
+<head>
+    <![CDATA[
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assests/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assests/css/style.css" type="text/css"></link>
+    <script  src="${pageContext.request.contextPath}/assests/js/jquery-3.3.1.js"></script>
+    <script src="${pageContext.request.contextPath}/assests/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assests/js/utils.js" type="text/javascript"></script>
+    
+    ]]>
+    <title><fmt:message bundle="${i18n}" key="${sessionScope.pageName}.title"/></title>
+    <u:icon file="icon.png"/>
+</head>
+<body>
+<com:header-navigation/>
+<br/>
+<div class="container">
+    <c:url var="bodyUrl" value="../main/main.jsp"/>
+    <c:if test="${not empty sessionScope.pagePath}">
+        <c:url var="bodyUrl" value='../${sessionScope.pagePath}'/>
+    </c:if>
+    <jsp:include page="${bodyUrl}"/>
+
+</div>
+<jsp:directive.include file="../common/footer.jspx"/>
+</body>
+</html>

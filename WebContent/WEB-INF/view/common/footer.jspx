@@ -1,0 +1,12 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0">
+    <footer class="footer bg-light">
+        <div class="container">
+            <span class="text-muted">2018</span>
+        </div>
+    </footer>
+</jsp:root>
+
+
+
